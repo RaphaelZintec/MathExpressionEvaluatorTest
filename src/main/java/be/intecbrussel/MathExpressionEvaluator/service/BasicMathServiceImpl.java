@@ -30,4 +30,9 @@ public class BasicMathServiceImpl implements BasicMathService{
     public double divide(double firstNumber, double secondNumber) {
         return firstNumber / secondNumber;
     }
+
+    @Override
+    public double modulo(double firstNumber, double secondNumber) {
+        return firstNumber % secondNumber;
+    }
 }

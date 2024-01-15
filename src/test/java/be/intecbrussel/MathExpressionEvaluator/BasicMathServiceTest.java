@@ -141,7 +141,7 @@ import java.util.stream.Stream;
 
         @ParameterizedTest
         @MethodSource("testDivisionFactory")
-        public void testDivision2(int n1, int n2, double expectedValue){
+        public void testDivision2(double n1, double n2, double expectedValue){
             double result = basicMathService.divide(n1, n2);
             Assertions.assertEquals(expectedValue, result);
         }
@@ -149,9 +149,43 @@ import java.util.stream.Stream;
             return Stream.of(
                     Arguments.of(50,2,25),
                     Arguments.of(40,2,20),
-                    Arguments.of(40,0,"Infinity")
+                    Arguments.of(40,0,"Infinity"),
+                    Arguments.of(0,0,"NaN"),
+                    Arguments.of(0,10,0.0),
+                    Arguments.of(0.5,0.2,2.5),
+                    Arguments.of(0.5,-2,-0.25),
+                    Arguments.of(-0.5,-0.2,2.5),
+                    Arguments.of(-0.5,2,-0.25),
+                    Arguments.of((10),(2-3),-10)
             );
         }
 
+        @Test
+        public void testModulo(){
+            int n1 = 10;
+            int n2 = 7;
+            int expectedNumber = 3;
+            double result = basicMathService.modulo(n1, n2);
+            Assertions.assertEquals(expectedNumber, result);
+        }
+
+        @ParameterizedTest
+        @MethodSource("testModuloFactory")
+        public void testModulo2(double n1, double n2, double expectedResult){
+            double result = basicMathService.modulo(n1, n2);
+            Assertions.assertEquals(expectedResult, result);
+        }
+        public static Stream<Arguments> testModuloFactory(){
+            return Stream.of(
+                    Arguments.of(50, 3, 2.0),
+                    Arguments.of(10, 7, 3),
+                    Arguments.of(-5, -3, -2),
+                    Arguments.of(5, -3, 2),
+                    Arguments.of(-5, 3, -2),
+                    Arguments.of(5.5, 3.3, 2.2),
+                    Arguments.of(-5.5, -3.3, -2.2),
+                    Arguments.of((-10), (-3), -1)
+            );
+        }
 
     }
