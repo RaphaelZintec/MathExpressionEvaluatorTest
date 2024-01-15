@@ -73,4 +73,85 @@ import java.util.stream.Stream;
             );
         }
 
+
+
+
+        @Test
+        public void testSubstraction(){
+            int firstNumber = 0;
+            int secondNumber = 0;
+            int expectedValue = 0;
+            double result = basicMathService.subtract(firstNumber, secondNumber);
+            Assertions.assertEquals(firstNumber, secondNumber);
+        }
+        @ParameterizedTest
+        @MethodSource("testSubstractionFactory")
+        public void testSubstraction2(double val1, double val2, double expectedValue){
+            double result = basicMathService.subtract(val1, val2);
+            Assertions.assertEquals(expectedValue,result);
+        }
+        public static Stream<Arguments> testSubstractionFactory(){
+            return Stream.of(
+                    Arguments.of(5,6,-1),
+                    Arguments.of(3,3,0),
+                    Arguments.of(-3,4,-7),
+                    Arguments.of(-3.6,-3,-.6)
+            );
+        }
+
+
+        @Test
+        public void testMultiply(){
+            int n1 = 5;
+            int n2 = 2;
+            int expectedValue = 10;
+            double result = basicMathService.multiply(n1, n2);
+            Assertions.assertEquals(expectedValue, result);
+        }
+        @ParameterizedTest
+        @MethodSource("testMultiplyFactory")
+        public void testMultiply2(double n1, double n2, double expectedValue){
+            double result = basicMathService.multiply(n1, n2);
+            Assertions.assertEquals(expectedValue, result);
+        }
+        public static Stream<Arguments> testMultiplyFactory(){
+            return Stream.of(
+                    Arguments.of(5, 3, 15),
+                    Arguments.of(10, 2, 20),
+                    Arguments.of(10, 0, 0),
+                    Arguments.of(0, 0, 0),
+                    Arguments.of(-30, 2, -60),
+                    Arguments.of(30.6, 2, 61.2),
+                    Arguments.of(-60, -2, 120)
+            );
+        }
+
+
+
+
+
+        @Test
+        public void testDivision(){
+            int n1 = 50;
+            int n2 = 2;
+            int excpectedValue = 25;
+            double result = basicMathService.divide(n1, n2);
+            Assertions.assertEquals(excpectedValue, result);
+        }
+
+        @ParameterizedTest
+        @MethodSource("testDivisionFactory")
+        public void testDivision2(int n1, int n2, double expectedValue){
+            double result = basicMathService.divide(n1, n2);
+            Assertions.assertEquals(expectedValue, result);
+        }
+        public static Stream<Arguments> testDivisionFactory(){
+            return Stream.of(
+                    Arguments.of(50,2,25),
+                    Arguments.of(40,2,20),
+                    Arguments.of(40,0,"Infinity")
+            );
+        }
+
+
     }
