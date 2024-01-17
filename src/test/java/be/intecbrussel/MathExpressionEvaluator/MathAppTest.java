@@ -6,7 +6,6 @@ public class MathAppTest {
     public void method()
     {
         Assertions assertions ;
-
     }
 
 

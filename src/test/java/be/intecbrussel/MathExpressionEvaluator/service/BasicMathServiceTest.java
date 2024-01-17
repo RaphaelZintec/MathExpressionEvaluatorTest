@@ -1,11 +1,12 @@
-package be.intecbrussel.MathExpressionEvaluator;
+package be.intecbrussel.MathExpressionEvaluator.service;
 
 
 import be.intecbrussel.MathExpressionEvaluator.service.BasicMathService;
 import be.intecbrussel.MathExpressionEvaluator.service.BasicMathServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-    import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
     import org.junit.jupiter.params.provider.Arguments;
     import org.junit.jupiter.params.provider.MethodSource;
 
@@ -149,16 +150,35 @@ import java.util.stream.Stream;
             return Stream.of(
                     Arguments.of(50,2,25),
                     Arguments.of(40,2,20),
-                    Arguments.of(40,0,"Infinity"),
-                    Arguments.of(0,0,"NaN"),
+                    Arguments.of(40,0,0),
+                    Arguments.of(0,0,0),
                     Arguments.of(0,10,0.0),
                     Arguments.of(0.5,0.2,2.5),
                     Arguments.of(0.5,-2,-0.25),
                     Arguments.of(-0.5,-0.2,2.5),
                     Arguments.of(-0.5,2,-0.25),
+                    Arguments.of(5.5,4.5,1.2222222222),
                     Arguments.of((10),(2-3),-10)
             );
         }
+
+
+    @ParameterizedTest
+    @MethodSource("testDivisionFactory_Exception")
+    public void testDivision_Exception(double n1, double n2, Class<Exception> expectException){
+        Assertions.assertThrows(expectException,
+                ()->basicMathService.divide(n1, n2)
+        );
+    }
+    public static Stream<Arguments> testDivisionFactory_Exception(){
+        return Stream.of(
+                Arguments.of(40,0,ArithmeticException.class),
+                Arguments.of(0,0,ArithmeticException.class),
+                Arguments.of(-40,0,ArithmeticException.class)
+        );
+    }
+
+
 
         @Test
         public void testModulo(){
@@ -178,7 +198,7 @@ import java.util.stream.Stream;
         public static Stream<Arguments> testModuloFactory(){
             return Stream.of(
                     Arguments.of(50, 3, 2.0),
-                    Arguments.of(10, 7, 3),
+                    Arguments.of(10, -4, 2),
                     Arguments.of(-5, -3, -2),
                     Arguments.of(5, -3, 2),
                     Arguments.of(-5, 3, -2),
@@ -187,5 +207,22 @@ import java.util.stream.Stream;
                     Arguments.of((-10), (-3), -1)
             );
         }
+
+
+
+    @ParameterizedTest
+    @MethodSource("testModuloFactory_Exception")
+    public void testModulo_Exception(double n1, double n2, Class<Exception> expectException){
+        Assertions.assertThrows(expectException,
+                ()->basicMathService.modulo(n1, n2)
+        );
+    }
+    public static Stream<Arguments> testModuloFactory_Exception(){
+        return Stream.of(
+                Arguments.of(40,0,IllegalArgumentException.class),
+                Arguments.of(0,0,IllegalArgumentException.class),
+                Arguments.of(-40,0,IllegalArgumentException.class)
+        );
+    }
 
     }
